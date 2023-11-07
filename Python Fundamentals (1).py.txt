@@ -1,0 +1,259 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+# variables and data type
+
+name = "Nida Ansari"
+print(name)
+
+
+# In[2]:
+
+
+A = "Python"
+a = 'anaconda'
+
+
+# In[3]:
+
+
+print(a, A)
+
+
+# In[4]:
+
+
+#list
+a = [1,2,3,4,5,6]
+
+
+# In[5]:
+
+
+a[2]
+
+
+# In[6]:
+
+
+#set
+a = {1,2,3,4,5,5}
+
+
+# In[7]:
+
+
+print(a)
+
+
+# In[8]:
+
+
+#tuple
+b = (1,2,3,4,5)
+
+
+# In[9]:
+
+
+print(b)
+
+
+# In[10]:
+
+
+#dictionary
+a = { 1: 'value', 2: 'value2'}
+
+
+# In[11]:
+
+
+print(a)
+
+
+# In[12]:
+
+
+a = 10
+b = 20
+
+a > 10 and b > 20
+
+
+# In[13]:
+
+
+a = 10
+b = 20
+
+a > 10 or b > 18
+
+
+# In[14]:
+
+
+# conditional statements
+x = 10
+y = 20
+
+
+# In[15]:
+
+
+if x == y:
+    print("equal")
+elif x > y:
+    print("greater")
+else:
+    print('smaller')
+
+
+# In[19]:
+
+
+def funct(n):
+    if n == 1:
+        return n
+    else:
+        return n * funct(n-1)
+print(funct(5))
+
+
+# In[20]:
+
+
+#loop
+for i in range(0,10):
+    print(i)
+
+
+# In[22]:
+
+
+n = 5
+while n > 0:
+    if n ==2:
+        break
+    else:
+        print(n)
+        n = n-1
+
+
+# In[23]:
+
+
+class Parent():
+    def func1(self):
+        print('This is Function 1')
+        
+class Child(Parent):
+    def func2(self):
+        print('This is Function 2')
+        
+ob = Child()
+ob.func1()
+
+
+# In[25]:
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+# In[26]:
+
+
+df = pd.read_csv(r"C:\Users\mansa\Documents\New folder\Anaconda\NYC_Jobs.csv")
+
+
+# In[27]:
+
+
+df.head(5)
+
+
+# In[28]:
+
+
+#Data Wrangling - Check for the null values
+df.isnull().sum()
+
+
+# In[29]:
+
+
+df.dropna()
+
+
+# In[30]:
+
+
+df.head(5)
+
+
+# In[40]:
+
+
+sns.countplot(x="Full-Time/Part-Time indicator", hue="Salary Frequency" ,data = df)
+
+
+# In[41]:
+
+
+#boxplot
+sns.boxplot(x = df["Salary Range From"])
+
+
+# In[42]:
+
+
+#boxplot
+sns.boxplot(x = df["Salary Range To"])
+
+
+# In[43]:
+
+
+sns.countplot(x = "Full-Time/Part-Time indicator", hue = "Posting Type", data = df)
+
+
+# In[44]:
+
+
+df["Salary Range From"].plot.hist()
+
+
+# In[45]:
+
+
+fig, ax = plt.subplots(figsize = (16,8))
+ax.scatter(df['Salary Range From'], df['Salary Range To'])
+ax.set_xlabel('Salary Range From')
+ax.set_ylabel('Salary Range To')
+plt.show()
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
