@@ -1,0 +1,87 @@
+---
+title: "WestRoxbury 1_3"
+author: "Nida Ansari"
+date: "2023-11-16"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r}
+housing.df <-read.csv("C:\\Users\\mansa\\OneDrive\\Documents\\New folder\\Anaconda\\R related projects\\R Datasets\\WestRoxbury.csv", header=TRUE)
+```
+
+```{r}
+set.seed(1)
+```
+```{r}
+dim(housing.df)
+```
+```{r}
+t(t(names(housing.df)))
+```
+```{r}
+# training 50%
+train.rows <-sample(rownames(housing.df), dim(housing.df)[1]*0.5)
+```
+
+```{r}
+# validation 30%
+valid.rows <-sample(setdiff(rownames(housing.df), train.rows), dim(housing.df)[1]*0.3)
+```
+
+```{r}
+# test 20%
+test.rows <-setdiff(rownames(housing.df), union(train.rows,valid.rows))
+```
+
+```{r}
+# train
+train.data <- housing.df[train.rows,]
+valid.data <- housing.df[valid.rows,]
+test.data <-housing.df[test.rows,]
+str(test.data)
+
+```
+
+```{r}
+reg <- lm(TOTAL.VALUE ~ .-TAX, data = housing.df, subset = train.rows)
+reg
+```
+
+```{r}
+#train
+tr.res <- data.frame(train.data$TOTAL.VALUE, reg$fitted.values, reg$residuals)
+head(tr.res)
+```
+
+```{r}
+#valid
+pred <- predict(reg, newdata = valid.data)
+vl.res <- data.frame(valid.data$TOTAL.VALUE, pred, residuals = valid.data$TOTAL.VALUE - pred)
+head(vl.res)
+```
+
+```{r}
+#test
+tpred <- predict(reg, newdata = test.data)
+te.res <-data.frame(test.data$TOTAL.VALUE, tpred, residuals = test.data$TOTAL.VALUE - tpred)
+head(te.res)
+```
+
+```{r}
+library(forecast)
+# train
+accuracy(reg$fitted.values, train.data$TOTAL.VALUE)
+```
+
+```{r}
+# valid
+accuracy(pred, valid.data$TOTAL.VALUE)
+```
+
+```{r}
+#test
+accuracy(tpred, test.data$TOTAL.VALUE)
+```
+
