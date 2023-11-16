@@ -1,0 +1,165 @@
+---
+title: "WestRoxbury 1-1"
+author: "Nida Ansari"
+date: "November 16, 2023"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+
+```{r}
+# loading the dataset
+housing.df <- read.csv("C:\\Users\\mansa\\OneDrive\\Documents\\New folder\\Anaconda\\R related projects\\R Datasets\\WestRoxbury.csv", header = TRUE)
+```
+
+
+```{r}
+# Find the dimension of the data frame
+dim(housing.df)
+```
+```{r}
+# Show the first six rows.
+head(housing.df)
+```
+
+```{r}
+#Show all the data in a new tab
+View(housing.df)
+```
+
+```{r}
+# Practicing showing different subsets of the data
+
+# Show the first 10 rows of the first column only
+housing.df[1:10, 1]
+```
+```{r}
+#Show the first 10 rows of each of the columns 
+housing.df[1:10, ]
+```
+
+```{r}
+# Show the fifth row of the first 10 columns
+housing.df[5, 1:10]
+```
+
+```{r}
+# Show the fifth row of some columns
+housing.df[5, c(1:2, 4, 8:10)]
+```
+
+```{r}
+# Show the whole first column
+housing.df[, 1]
+```
+
+```{r}
+# A different way to show the whole first column 
+housing.df$TOTAL.VALUE
+```
+
+```{r}
+# Show the first 10 rows of the first column
+housing.df$TOTAL.VALUE[1:10]
+```
+
+```{r}
+# Find the length of the first column 
+length(housing.df$TOTAL.VALUE)
+```
+
+```{r}
+# Find the mean of the first column
+mean(housing.df$TOTAL.VALUE)
+```
+
+```{r}
+# Find summary statistics for each column
+summary(housing.df)
+```
+
+```{r}
+# print a list of variables to the screen
+names(housing.df)
+```
+
+```{r}
+# print the list in a useful format
+t(t(names(housing.df)))
+```
+
+```{r}
+# Change the first column's name
+colnames(housing.df)[1] <-("TOTAL_VALUE")
+```
+
+```{r}
+# Remodel is a factor variable
+class(housing.df$REMODEL)
+```
+```{r}
+# Same
+class(housing.df[ ,14])
+```
+```{r}
+# It can take one of three levels
+levels(housing.df[, 14])
+```
+```{r}
+# Bedrooms is an integer variable
+class(housing.df$BEDROOMS)
+```
+```{r}
+# Total_Value is a numeric variable
+class(housing.df[, 1])
+```
+```{r}
+# Treat Remodel as categorical ( R will create dummy variables)
+housing.df$REMODEL <-factor(housing.df$REMODEL, levels = c(1,2,3), labels = c("None", "Old", "Recent"))
+```
+
+```{r}
+# To illustrate missing data procedures, we first convert a few entries for bedrooms to NA's. Then we impute these missing values using the median of the remaining values. 
+rows.to.missing <- sample(row.names(housing.df), 10)
+housing.df[rows.to.missing,]$BEDROOMS <- NA
+#Now we have 10 NA's and the median of the remaining values is 3
+summary(housing.df$BEDROOMS)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
