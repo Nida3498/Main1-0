@@ -1,0 +1,112 @@
+---
+title: "Bank"
+author: "Nida Ansari"
+date: "November 17th, 2023"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# loading the dataset
+bank.df <- read.csv("C:\\Users\\mansa\\OneDrive\\Documents\\New folder\\Anaconda\\R related projects\\R Datasets\\bank.csv",header=TRUE)
+```
+
+```{r}
+# Find the dimension of the data frame. 
+dim(bank.df)
+```
+
+```{r}
+#Show the first six rows
+head(bank.df)
+```
+
+```{r}
+# Show all the data in a new tab
+View(bank.df)
+```
+
+```{r}
+# Practice showing different subsets of the data
+# Show the first 10 rows of the first column only
+bank.df[1:10, 1]
+```
+
+```{r}
+# Show the first 10 rows of each of the columns
+bank.df[1:10, ]
+```
+
+```{r}
+# Show the fifth row of the first 10 columns
+bank.df[5, 1:10]
+```
+
+```{r}
+# Show the fifth row of some columns
+bank.df[5, c(1:2, 4, 8:10)]
+```
+
+```{r}
+# Show the whole first column
+bank.df[, 1]
+```
+
+```{r}
+# A different way to show the whole first column
+bank.df$age
+```
+
+```{r}
+# Show the first 10 rows of the first column
+bank.df$age[1:10]
+```
+
+```{r}
+# Find the length of the first column
+length(bank.df$age)
+```
+
+```{r}
+# Find the mean of the first column
+mean(bank.df$age)
+```
+
+```{r}
+# Find the summary statistics for each column
+summary(bank.df)
+```
+
+```{r}
+# Print a list of the variables to the screen
+names(bank.df)
+```
+
+```{r}
+# Print the list a useful format
+t(t(names(bank.df)))
+```
+
+```{r}
+# Treat default as a categorical (R will create dummy variables)
+bank.df$default <- factor(bank.df$default, levels = c(1,2), labels = c("No", "Yes"))
+```
+
+```{r}
+# checking the default variable to see if it is a factor
+class(bank.df$default)
+```
+
+```{r}
+# To illustrate missing data procedures, we first convert a few entries for Age to NA's. Then we impute these missing values using the median of the remaining values. 
+rows.to.missing <- sample(row.names(bank.df), 10)
+bank.df[rows.to.missing,]$Age <- NA
+#Now we have 10 NA's and the median of the remaining values is 33
+summary(bank.df$age)
+```
+
