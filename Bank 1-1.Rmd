@@ -1,0 +1,91 @@
+---
+title: "Bank 1-1"
+author: "Nida Ansari"
+date: "November 17th, 2023"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r}
+#loading the dataset
+bank.df <- read.csv("C:\\Users\\mansa\\OneDrive\\Documents\\New folder\\Anaconda\\R related projects\\R Datasets\\bank.csv", header = TRUE)
+```
+
+```{r}
+set.seed(1)
+```
+
+```{r}
+dim(bank.df)
+```
+
+```{r}
+t(t(names(bank.df)))
+```
+
+```{r}
+# training 50%
+train.rows <- sample(rownames(bank.df), dim(bank.df)[1]*0.5)
+```
+```{r}
+# Validation 30%
+valid.rows <- sample(setdiff(rownames(bank.df), train.rows), dim(bank.df)[1]*0.3)
+```
+```{r}
+# Test 20 %
+test.rows <- setdiff(rownames(bank.df), union(train.rows, valid.rows))
+```
+
+```{r}
+# train
+train.data <- bank.df[train.rows, ]
+valid.data <- bank.df[valid.rows, ]
+test.data <- bank.df[test.rows, ]
+str(test.data)
+```
+
+```{r}
+reg <- lm(age ~ .-housing, data = bank.df, subset = train.rows)
+reg
+```
+
+```{r}
+# train
+tr.res <- data.frame(train.data$age, reg$fitted.values, reg$residuals)
+head(tr.res)
+```
+
+```{r}
+#valid
+pred <- predict(reg, newdata = valid.data)
+vl.res <- data.frame(valid.data$age, pred, residuals = valid.data$age - pred)
+head(vl.res)
+```
+
+```{r}
+# test
+tpred <- predict(reg, newdata = test.data)
+te.res <-data.frame(test.data$age, tpred, residuals = test.data$age - tpred)
+head(te.res)
+```
+
+```{r}
+library(forecast)
+```
+
+```{r}
+#train
+accuracy(reg$fitted.values, train.data$age)
+```
+
+```{r}
+#Validate
+accuracy(pred, valid.data$age)
+```
+
+```{r}
+# test
+accuracy(tpred, test.data$age)
+```
+
